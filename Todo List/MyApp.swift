@@ -1,8 +1,9 @@
 import SwiftUI
+import SwiftData
 
 @main struct MyApp: App {
     
-    @State private var showSplash: Bool = false
+    @State private var showSplash: Bool = true
     
     var body: some Scene {
         WindowGroup {
@@ -20,6 +21,7 @@ import SwiftUI
                 showSplash = false
             }
         }
+        .modelContainer(for: Todo.self)
     }
 }
 
