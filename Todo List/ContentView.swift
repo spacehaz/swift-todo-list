@@ -41,16 +41,19 @@ struct ContentView: View {
                 }
             }
             
-            .sheet(isPresented: $isAdding) {
+            .sheet(isPresented: $isAdding, onDismiss: {
+                newTaskTitle = ""
+            }) {
                 AppSheet (
-                    title: "Create new item",
+                    "Create new item",
                     primary: SheetAction(
-                        title: "Ok",
+                        "Ok",
                         isDisabled: trimmedTitle.isEmpty,
+                        action: addItem
                         
                     ),
                     secondary: SheetAction(
-                        title: "Cancel",
+                        "Cancel",
                         action: {
                             newTaskTitle = ""
                         }

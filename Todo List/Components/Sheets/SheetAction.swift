@@ -14,7 +14,7 @@ struct SheetAction {
     let action: () -> Void
     
     init (
-        title: String,
+        _ title: String,
         role: ButtonRole? = nil,
         isDisabled: Bool = false,
         action: @escaping () -> Void = {}

@@ -18,7 +18,7 @@ struct AppSheet<Content: View>: View {
     @State private var height: CGFloat = 300.0
     
     init (
-        title: String,
+        _ title: String,
         message: String? = nil,
         primary: SheetAction,
         secondary: SheetAction? = nil,
@@ -67,6 +67,7 @@ struct AppSheet<Content: View>: View {
                .buttonStyle(.primary)
            if let secondary {
                button(for: secondary)
+                .buttonStyle(.secondary)
            }
        }
    }
@@ -80,12 +81,27 @@ struct AppSheet<Content: View>: View {
    }
 }
 
-#Preview {
-    @Previewable @State var text: String = "String"
-    AppSheet(
-        title: "Hello",
-        primary: SheetAction(title: "Submit")
-    ) {
-        TextField("Type something", text: $text)
+extension AppSheet where Content == EmptyView {
+    init(_ title: String,
+         message: String? = nil,
+         primary: SheetAction,
+         secondary: SheetAction? = nil) {
+        self.init(title, message: message, primary: primary, secondary: secondary) {
+            EmptyView()
+        }
     }
 }
+
+#Preview {
+    @Previewable @State var text = ""
+    Color.clear
+        .sheet(isPresented: .constant(true)) {
+            AppSheet("New todo", message: "What do you need to do?",
+                     primary: SheetAction("Add"),
+                     secondary: SheetAction("Cancel")) {
+                TextField("Title", text: $text)
+                    .textFieldStyle(.roundedBorder)
+            }
+        }
+}
+    

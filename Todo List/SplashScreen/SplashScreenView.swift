@@ -15,16 +15,16 @@ struct SplashScreenView: View {
     
     var body: some View {
         ZStack {
-            Color("ButterYellow")
+            Color.onBrandPrimary
                 .ignoresSafeArea()
             
             Image(systemName: "map")
                 .resizable()
+                .scaledToFit()
                 .frame(width: 140, height: 140)
-                .aspectRatio(contentMode: .fill)
                 .scaleEffect(scale)
                 .opacity(opacity)
-                .foregroundStyle(.royalIris)
+                .foregroundStyle(Color.brandPrimary)
 
         }
         .onAppear {
