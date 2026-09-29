@@ -16,6 +16,11 @@
 			path = "Todo List";
 			sourceTree = "<group>";
 		};
+		E585B804306B8E900003FC2D /* Colors */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Colors;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +37,7 @@
 			children = (
 				000000000000000000000010 /* Todo List */,
 				000000000000000000000020 /* Products */,
+				E585B804306B8E900003FC2D /* Colors */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +64,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				000000000000000000000010 /* Todo List */,
+				E585B804306B8E900003FC2D /* Colors */,
 			);
 			name = "Todo List";
 			productName = MyApp;

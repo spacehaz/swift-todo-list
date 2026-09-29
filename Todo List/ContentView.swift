@@ -41,16 +41,24 @@ struct ContentView: View {
                 }
             }
             
-            .alert("Add new item", isPresented: $isAdding) {
-                TextField("Title", text: $newTaskTitle)
-                Button("Cancel", role: .cancel) {
-                    isAdding = false
-                    newTaskTitle = ""
+            .sheet(isPresented: $isAdding) {
+                AppSheet (
+                    title: "Create new item",
+                    primary: SheetAction(
+                        title: "Ok",
+                        isDisabled: trimmedTitle.isEmpty,
+                        
+                    ),
+                    secondary: SheetAction(
+                        title: "Cancel",
+                        action: {
+                            newTaskTitle = ""
+                        }
+                    ),
+                ) {
+                    TextField("Title", text: $newTaskTitle)
                 }
-                Button("Add") {
-                    addItem()
-                }
-                .disabled(trimmedTitle.isEmpty)
+                
             }
             
         }
