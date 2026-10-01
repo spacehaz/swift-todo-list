@@ -7,6 +7,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var isAdding: Bool = false
     @State private var newTaskTitle: String = ""
+    @State private var itemToDelete: Todo?
     
     
     var trimmedTitle: String {
@@ -17,7 +18,10 @@ struct ContentView: View {
         guard !trimmedTitle.isEmpty else { return }
         modelContext.insert(Todo(title: trimmedTitle))
         newTaskTitle = ""
-        isAdding = false
+    }
+    
+    func deleteItem (_ todo: Todo) -> Void {
+        modelContext.delete(todo)
     }
     
     var body: some View {
@@ -25,6 +29,13 @@ struct ContentView: View {
             List {
                 ForEach(todos) { todo in
                     Text(todo.title)
+                        .swipeActions {
+                            Button("Delete", systemImage: "trash.fill") {
+                                itemToDelete = todo
+                            }
+                            .tint(.red)
+
+                        }
                 }
             }
             .overlay {
@@ -47,7 +58,7 @@ struct ContentView: View {
                 AppSheet (
                     "Create new item",
                     primary: SheetAction(
-                        "Ok",
+                        "Add",
                         isDisabled: trimmedTitle.isEmpty,
                         action: addItem
                         
@@ -61,6 +72,23 @@ struct ContentView: View {
                 ) {
                     TextField("Title", text: $newTaskTitle)
                 }
+                
+            }
+            
+            
+            .sheet(item: $itemToDelete) { todo in
+                let title = todo.title
+                AppSheet (
+                    "Delete \"\(title)\"?" ,
+                    message: "This can't be undone.",
+                    primary: SheetAction(
+                        "Delete",
+                        role: .destructive,
+                    ) {
+                        deleteItem(todo)
+                    },
+                    secondary: SheetAction("Cancel")
+                )
                 
             }
             
