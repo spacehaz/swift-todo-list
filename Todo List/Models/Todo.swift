@@ -1,9 +1,13 @@
+
+
 //
 //  Todo.swift
 //  Todo List
 //
 //  Created by Hazo Baykulov on 28.09.2026.
 //
+
+
 
 import SwiftData
 import Foundation
@@ -15,6 +19,7 @@ import Foundation
     var isDone: Bool
     var text: String = ""
     var priorityRaw: Int = Priority.medium.rawValue
+    
     var priority: Priority {
         get { Priority(rawValue: priorityRaw) ?? .medium }
         set { priorityRaw = newValue.rawValue }
@@ -32,7 +37,6 @@ import Foundation
         self.createdAt = createdAt
         self.isDone = isDone
         self.text = text
-        self.priorityRaw = priority.rawValue
         self.priority = priority
 
     }

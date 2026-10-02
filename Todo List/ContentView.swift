@@ -28,15 +28,23 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(todos) { todo in
-                    Text(todo.title)
-                        .swipeActions {
-                            Button("Delete", systemImage: "trash.fill") {
-                                itemToDelete = todo
-                            }
-                            .tint(.red)
-
+                    NavigationLink (value: todo) {
+                        Text(todo.title)
+                            
+                    }
+                    .swipeActions {
+                        Button("Delete", systemImage: "trash.fill") {
+                            itemToDelete = todo
                         }
+                        .tint(.red)
+
+                    }
+                    
+                    
                 }
+            }
+            .navigationDestination(for: Todo.self) { todo in
+                TodoDetailedView(todo: todo)
             }
             .overlay {
                 if todos.isEmpty {
@@ -55,24 +63,9 @@ struct ContentView: View {
             .sheet(isPresented: $isAdding, onDismiss: {
                 newTaskTitle = ""
             }) {
-                AppSheet (
-                    "Create new item",
-                    primary: SheetAction(
-                        "Add",
-                        isDisabled: trimmedTitle.isEmpty,
-                        action: addItem
-                        
-                    ),
-                    secondary: SheetAction(
-                        "Cancel",
-                        action: {
-                            newTaskTitle = ""
-                        }
-                    ),
-                ) {
-                    TextField("Title", text: $newTaskTitle)
+                TodoEditorView(draft: TodoDraft()) { todo in
+                    modelContext.insert(Todo(todo))
                 }
-                
             }
             
             
